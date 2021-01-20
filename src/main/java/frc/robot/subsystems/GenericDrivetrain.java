@@ -38,9 +38,9 @@ public class GenericDrivetrain extends SubsystemBase {
   //Method for driving during Autonomous - used for Mecanum
   public void autoDrive(double speed, double angle, double rotation) {}
 
-  // //Direction switching for manueverabiltiy
-  // public void switchDirection(){
-  //   DIRECTION_MULTIPLIER *= -1;
-  // }
+  //Direction switching for manueverabiltiy
+  public void switchDirection(){
+    DIRECTION_MULTIPLIER *= -1;
+  }
 
 }

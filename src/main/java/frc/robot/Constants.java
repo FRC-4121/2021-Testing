@@ -25,7 +25,7 @@ public final class Constants {
 
     public static final class DrivetrainConstants {
 
-        //0 is West Coast, 1 is Mecanum (mecanum not currently supported)
+        //0 is West Coast, 1 is Mecanum (simple switching not currently supported)
         public static final int DRIVETRAIN_TYPE = 0;
 
         //For West Coast, indicates the number of motors per robot side.  ONLY 2 OR 3!!!

@@ -28,11 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //Subsystems
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private WestCoastDrivetrain drivetrain = new WestCoastDrivetrain();
 
   //Commands
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveWithJoysticksCommand joysticksCommand = new DriveWithJoysticksCommand(drivetrain);
   private final DriveWithXboxCommand xboxCommand = new DriveWithXboxCommand(drivetrain);
   // private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection);
@@ -99,6 +97,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
