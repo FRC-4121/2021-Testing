@@ -42,5 +42,27 @@ public final class Constants {
         //Direction Control
         public static double DIRECTION_MULTIPLIER = 1;
 
+        //PID Constants
+        public static final double kP_Straight = 10;
+        public static final double kI_Straight = 0.0;
+        public static final double kD_Straight = 0.0;
+        public static final double kP_Turn = 0;
+        public static final double kI_Turn = 0.0;
+        public static final double kD_Turn = 0.0;
+
+        //Speeds
+        public static final double kAutoDriveSpeed = 0.8;
+        public static final double kAutoTurnSpeed = 0.5;
+
+        //Tolerances
+        public static final double kTurnAngleTolerance = 0.1;
+        public static final double kAutoDistanceTolerance = 1;
+
+        //Drivetrain config constants
+        public static final double kWheelDiameter = 6.0;
+        public static final double kNEOEncoderPPR = 42;
+        public static final double kToughboxMiniGearRatio = 10.71;
+        public static final double AUTO_ENCODER_REVOLUTION_FACTOR = 10.71;//needs to be determined by testing.
+
     }
 }

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -46,7 +47,8 @@ public class RobotContainer {
   private JoystickButton invertDirection_xbox = new JoystickButton(xbox, 6);
 
   //Camera
-  private UsbCamera driverCam = new UsbCamera("Driver Cam", 0);
+  private CameraServer camServer = CameraServer.getInstance();
+  private UsbCamera driverCam = camServer.startAutomaticCapture("Driver Cam", 0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -97,6 +99,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new AutoDrive(drivetrain, 12, 0, 1, 5);
   }
 }
