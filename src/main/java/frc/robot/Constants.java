@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
+
 /**  
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -63,6 +66,25 @@ public final class Constants {
         public static final double kNEOEncoderPPR = 42;
         public static final double kToughboxMiniGearRatio = 10.71;
         public static final double AUTO_ENCODER_REVOLUTION_FACTOR = 10.71;//needs to be determined by testing.
+
+        //Trajectory config constants (from FRC Characterization toolsuite)
+        public static final double kS_Characterization = 0.212;
+        public static final double kV_Characterization = 2.76;
+        public static final double kA_Characterization = 0.25;
+        public static final double TRACKWIDTH = Units.inchesToMeters(28);
+
+        //Trajectory configs to be tuned
+        public static final double kP_Trajectory = 2.12;
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+
+        //Trajectory config objects
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(TRACKWIDTH);
+
 
     }
 }

@@ -15,8 +15,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class WestCoastDrivetrain extends GenericDrivetrain {
   /**
@@ -51,6 +57,8 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
 
   private DifferentialDrive drivetrain;
 
+  private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
+
   public WestCoastDrivetrain() {
 
     //Create motor groups and drivetrain
@@ -75,8 +83,14 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
     SmartDashboard.putNumber("Reset Encoders", 0);
   }
 
+  // @Override
+  // public void initDefaultCommand(){}
+
   @Override
   public void periodic() {
+
+    // Update the odometry in the periodic block
+    odometry.update(gyro.getRotation2d(), getMasterLeftEncoderPosition(), getMasterRightEncoderPosition());
 
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Encoder Position", l1_encoder.getPosition());
@@ -124,12 +138,40 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
     return R1_encoder.getPosition();
   }
 
+  public double[] getEncoderPositions(){
+    double[] positions = {getMasterLeftEncoderPosition(), getMasterRightEncoderPosition()};
+    return positions;
+  }
+
+  public double getMasterLeftEncoderVelocity(){
+    return l1_encoder.getVelocity();
+  }
+
+  public double getMasterRightEncoderVelocity(){
+    return R1_encoder.getVelocity();
+  }
+  
+  public DifferentialDriveWheelSpeeds getEncoderSpeeds(){
+    DifferentialDriveWheelSpeeds speeds = new DifferentialDriveWheelSpeeds(getMasterLeftEncoderVelocity(), getMasterRightEncoderVelocity());
+    return speeds;
+  }
+
+
   public double getGyroAngle(){
-    return gyro.getAngle();
+    return gyro.getRotation2d().getDegrees();
+  }
+  
+  public Pose2d getPose(){
+    return odometry.getPoseMeters();
   }
 
   public void zeroGyro(){
     gyro.reset();
+  }
+  
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(pose, gyro.getRotation2d());
   }
 
   public void resetEncoders(){
@@ -137,6 +179,12 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
     l2_encoder.setPosition(0);
     R1_encoder.setPosition(0);
     R2_encoder.setPosition(0);
+  }
+
+  public void voltDrive(double leftVolts, double rightVolts){
+    leftMotorGroup.setVoltage(leftVolts);
+    rightMotorGroup.setVoltage(rightVolts);
+    drivetrain.feed();
   }
 
   @Override
